@@ -7,9 +7,18 @@ block content
 			thead.thead-dark
 				tr
 					th(style='width:50px;text-align:center') #
-					th(style='width:220px') Name
-					th(style='width:220px') Username
+					th(style='width:240px') Name
+					th(style='width:240px') Username
 					th(style='width:240px') Location
+					th(style='width:240px') National ID
+					th(style='width:240px') Phone Number
+					th(style='width:240px') Station
+					th(style='width:240px') Level of Education
+					th(style='width:240px') Institution
+					th(style='width:240px') Date of Birth
+					th(style='width:240px') Date of Appointment
+					th(style='width:240px') Marital Status
+					th(style='width:240px') Gender
 					th Account Created
 			tbody
 			- for (var i = 0; i < accts.length; i++)
@@ -18,4 +27,12 @@ block content
 					td= accts[i].name
 					td= accts[i].user
 					td= accts[i].country
-					td= accts[i].date
+					td= accts[i].id
+					td= accts[i].phone
+					td= accts[i].station
+					td= accts[i].loe
+					td= accts[i].inst
+					td= accts[i].dob
+					td= accts[i].doa
+					td= accts[i].status
+					td= accts[i].gender

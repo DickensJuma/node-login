@@ -4,10 +4,11 @@
 // store the userId on the client side in a hidden input field //
 input(type='hidden', value= user._id)#userId
 
+
 #account-form-container.center-vertical
 	form.card.card-body.bg-light(method='post')#account-form
 		h2
-		h6#sub Please tell us a little about yourself.
+		h6#sub Register.
 		hr
 		.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Name
@@ -25,7 +26,7 @@ input(type='hidden', value= user._id)#userId
 				select.custom-select#country-list(name='country')
 					each item in countries
 						option(selected=item.name == user.country)= item.name
-		hr
+
 		.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Username
 			.col-sm-9
@@ -35,6 +36,56 @@ input(type='hidden', value= user._id)#userId
 			label.col-sm-3.col-form-label.col-form-label-sm Password
 			.col-sm-9
 				input.form-control#pass-tf(type='password', name='pass', value='')
+				hr
+			.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm National ID
+			.col-sm-9
+				input.form-control#name-tf(type='id', name='id', value= user.id)
+
+			.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Phone Number
+			.col-sm-9
+				input.form-control#name-tf(type='phone', name='phone', value= user.phone)
+
+		.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Station
+			.col-sm-9
+				input.form-control#name-tf(type='station', name='station', value= user.station)
+
+		.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Level of Education
+			.col-sm-9
+				input.form-control#name-tf(type='loe', name='loe', value= user.loe)
+
+				.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Institution
+			.col-sm-9
+				input.form-control#name-tf(type='inst', name='inst', value= user.inst)
+		.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Date of Birth
+			.col-sm-9
+				input.form-control#dob-tf(type='dob', name='dob', value= user.dob)
+		.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Date of Appointment
+			.col-sm-9
+				input.form-control#doa-tf(type='doa', name='doa', value= user.doa)
+
+		.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Marital Status
+			.col-sm-9
+				input.form-control#status-tf(type='status', name='status', value= user.status)
+	    .form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Marital Status
+			.col-sm-9
+				input.form-control#status-tf(type='status', name='status', value= user.status)
+			
+
+
+
+
+
+
+
 
 		hr
 		.form-buttons

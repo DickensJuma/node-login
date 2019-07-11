@@ -15,7 +15,7 @@ MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, c
 		console.log('mongo :: connected to database :: "'+process.env.DB_NAME+'"');
 	}
 });
-
+console.log
 const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});}
 
 /*
@@ -120,7 +120,17 @@ exports.updateAccount = function(newData, callback)
 		var o = {
 			name : data.name,
 			email : data.email,
-			country : data.country
+			country : data.country,
+			Id : data.id,
+			phone : data.phone,
+			station : data.station,
+			loe : data.loe,
+			inst : data.inst,
+			dob : data.dob,
+			doe : data.doe,
+			status : data.status,
+			gender : data.gender
+			
 		}
 		if (data.pass) o.pass = data.pass;
 		accounts.findOneAndUpdate({_id:getObjectId(data.id)}, {$set:o}, {returnOriginal : false}, callback);

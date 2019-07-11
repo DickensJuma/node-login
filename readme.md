@@ -31,7 +31,7 @@ For testing purposes you can view a [database dump of all accounts here](https:/
 
 4. From within the node-login directory start the server.
 
-		> node app
+		> npm start
 		
 5. Open a browser window and navigate to: [http://localhost:3000](http://localhost:3000)
 
