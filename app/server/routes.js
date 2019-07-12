@@ -2,6 +2,8 @@
 var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
+var GD = require('./modules/gender');
+
 
 module.exports = function(app) {
 
@@ -62,10 +64,13 @@ module.exports = function(app) {
 			res.render('home', {
 				title : 'Control Panel',
 				countries : CT,
-				udata : req.session.user
+				udata : req.session.user,
+				gender : GD
 			});
 		}
 	});
+
+	
 	
 	app.post('/home', function(req, res){
 		if (req.session.user == null){
@@ -113,12 +118,15 @@ module.exports = function(app) {
 			email 	: req.body['email'],
 			user 	: req.body['user'],
 			pass	: req.body['pass'],
+			phone	: req.body['phone'],
+			id      : req.body['id'],
 			country : req.body['country'],
 			dob 	: req.body['dob'],
 			doe 	: req.body['doe'],
+			loe     : req.body['loe'],	
 			status 	: req.body['status'],
-			phone	: req.body['phone'],
-			id : req.body['id']
+			gender   : req.body['gender'],
+			
 		}, function(e){
 			if (e){
 				res.status(400).send(e);

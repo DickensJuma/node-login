@@ -11,7 +11,7 @@ MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, c
 		db = client.db(process.env.DB_NAME);
 		accounts = db.collection('accounts');
 	// index fields 'user' & 'email' for faster new account validation //
-		accounts.createIndex({user: 1, email: 1});
+		accounts.createIndex({user: 1, email: 1, Id: 1});
 		console.log('mongo :: connected to database :: "'+process.env.DB_NAME+'"');
 	}
 });
@@ -64,10 +64,10 @@ exports.generateLoginKey = function(user, ipAddress, callback)
 exports.validateLoginKey = function(cookie, ipAddress, callback)
 {
 // ensure the cookie maps to the user's last recorded ip address //
-	accounts.findOne({cookie:cookie, ip:ipAddress}, callback);
+	accounts.findOne({cookie:cookie, ip:ipAddress, Id: data.id}, callback);
 }
 
-exports.generatePasswordKey = function(email, ipAddress, callback)
+exports.generatePasswordKey = function(email, ipAddress, Id,callback)
 {
 	let passKey = guid();
 	accounts.findOneAndUpdate({email:email}, {$set:{
@@ -121,17 +121,17 @@ exports.updateAccount = function(newData, callback)
 			name : data.name,
 			email : data.email,
 			country : data.country,
-			Id : data.id,
 			phone : data.phone,
 			station : data.station,
-			loe : data.loe,
+			loa : data.loa,
 			inst : data.inst,
-			dob : data.dob,
-			doe : data.doe,
+			dob : Date,
+			doe : Date,
 			status : data.status,
 			gender : data.gender
 			
 		}
+		
 		if (data.pass) o.pass = data.pass;
 		accounts.findOneAndUpdate({_id:getObjectId(data.id)}, {$set:o}, {returnOriginal : false}, callback);
 	}
@@ -144,6 +144,7 @@ exports.updateAccount = function(newData, callback)
 		});
 	}
 }
+
 
 exports.updatePassword = function(passKey, newPass, callback)
 {

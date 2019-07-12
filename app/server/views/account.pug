@@ -8,7 +8,7 @@ input(type='hidden', value= user._id)#userId
 #account-form-container.center-vertical
 	form.card.card-body.bg-light(method='post')#account-form
 		h2
-		h6#sub Register.
+		h4#sub Register.
 		hr
 		.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Name
@@ -23,7 +23,7 @@ input(type='hidden', value= user._id)#userId
 		.form-group.row.margin-zero
 			label.col-sm-3.col-form-label.col-form-label-sm Location
 			.col-sm-9
-				select.custom-select#country-list(name='country')
+				select.custom-select#county-list(name='country')
 					each item in countries
 						option(selected=item.name == user.country)= item.name
 
@@ -40,45 +40,48 @@ input(type='hidden', value= user._id)#userId
 			.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm National ID
 			.col-sm-9
-				input.form-control#name-tf(type='id', name='id', value= user.id)
+				input.form-control#id-tf(type='id', name='id', value= user.id)
 
 			.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Phone Number
 			.col-sm-9
-				input.form-control#name-tf(type='phone', name='phone', value= user.phone)
+				input.form-control#phone-tf(type='phone', name='phone', value= user.phone)
 
 		.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Station
 			.col-sm-9
-				input.form-control#name-tf(type='station', name='station', value= user.station)
+				input.form-control#station-tf(type='station', name='station', value= user.station)
 
 		.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Level of Education
 			.col-sm-9
-				input.form-control#name-tf(type='loe', name='loe', value= user.loe)
+				input.form-control#loe-tf(type='loe', name='loe', value= user.loe)
 
 				.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Institution
 			.col-sm-9
-				input.form-control#name-tf(type='inst', name='inst', value= user.inst)
+				input.form-control#inst-tf(type='inst', name='inst', value= user.inst)
+
 		.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Date of Birth
 			.col-sm-9
-				input.form-control#dob-tf(type='dob', name='dob', value= user.dob)
+				input.form-control#dob-tf(type='date', name='dob', value= Date)
+
 		.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Date of Appointment
 			.col-sm-9
-				input.form-control#doa-tf(type='doa', name='doa', value= user.doa)
+				input.form-control#doa-tf(type='date', name='doa', value= Date)
 
 		.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Marital Status
 			.col-sm-9
 				input.form-control#status-tf(type='status', name='status', value= user.status)
-	    .form-group.row
-			label.col-sm-3.col-form-label.col-form-label-sm Marital Status
+				
+			.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Gender
 			.col-sm-9
-				input.form-control#status-tf(type='status', name='status', value= user.status)
-			
+				input.form-control#gender-tf(type='gender', name='gender', value= user.gender)
+
 
 
 
