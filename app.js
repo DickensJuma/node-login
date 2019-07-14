@@ -44,10 +44,15 @@
 	http.createServer(app).listen(app.get('port'), function(){
 		console.log('Express server listening on port ' + app.get('port'));
 	});
+	
+
+	//DB Config
+const db =require('./config/keys').mongoURI;
+
+//connect to MongoDB
+MongoStore.connect(db).then(() => console.log('MongoDB Connected')).catch(err => console.log(err)
+);
 
 
-	// db.your_collectio.update({},
-    //                       {$set : {"station":1}},
-    //                       {upsert:false,
-	// 					  multi:true}) 
+	
 						  
