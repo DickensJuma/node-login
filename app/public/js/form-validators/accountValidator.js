@@ -3,8 +3,8 @@ function AccountValidator()
 {
 // build array maps of the form inputs & control groups //
 
-	this.formFields = [$('#name-tf'), $('#email-tf'), $('#user-tf'), $('#pass-tf'), $('#id-tf')];
-	this.controlGroups = [$('#name-cg'), $('#email-cg'), $('#user-cg'), $('#pass-cg'), $('#id-tf')];
+	this.formFields = [$('#name-tf'), $('#email-tf'), $('#user-tf'), $('#pass-tf'), $('#id-tf'),$('#phone-tf'),$('#loe-tf'),$('#inst-tf'),$('#lob-tf'),$('#loa-tf'),$('#gender-tf'),$('#status-tf')];
+	this.controlGroups = [$('#name-cg'), $('#email-cg'), $('#user-cg'), $('#pass-cg'), $('#id-cg'),$('#phone-cg'),$('#loe-cg'),$('#inst-cg'),$('#lob-cg'),$('#loa-cg'),$('#gender-cg'),$('#status-cg'),];
 	
 // bind the form-error modal window to this controller to display any errors //
 	
@@ -24,6 +24,12 @@ function AccountValidator()
 		}	else{
 			return s.length >= 6;
 		}
+	}
+
+	this.validateId = function(i)
+	{
+		var r = /[0-9]/;
+		return r.test(i);
 	}
 	
 	this.validateEmail = function(e)
@@ -53,6 +59,12 @@ AccountValidator.prototype.showInvalidUserName = function()
 {
 	this.controlGroups[2].addClass('error');
 	this.showErrors(['That username is already in use.']);
+
+}
+AccountValidator.prototype.showInvalidUserId = function()
+{
+	this.controlGroups[3].addClass('error');
+	this.showErrors(['That National ID Number is already  used.']);
 }
 
 AccountValidator.prototype.validateForm = function()
@@ -72,6 +84,10 @@ AccountValidator.prototype.validateForm = function()
 	if (this.validatePassword(this.formFields[3].val()) == false) {
 		this.controlGroups[3].addClass('error');
 		e.push('Password Should Be At Least 6 Characters');
+
+	if (this.validateId(this.formFields[4].val()) == false) {
+		this.controlGroups[4].addClass('error');
+		e.push('National ID invalid');	
 	}
 	if (e.length) this.showErrors(e);
 	return e.length === 0;

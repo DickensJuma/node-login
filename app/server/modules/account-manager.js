@@ -64,10 +64,10 @@ exports.generateLoginKey = function(user, ipAddress, callback)
 exports.validateLoginKey = function(cookie, ipAddress, callback)
 {
 // ensure the cookie maps to the user's last recorded ip address //
-	accounts.findOne({cookie:cookie, ip:ipAddress, Id: data.id}, callback);
+	accounts.findOne({cookie:cookie, ip:ipAddress}, callback);
 }
 
-exports.generatePasswordKey = function(email, ipAddress, Id,callback)
+exports.generatePasswordKey = function(email, ipAddress,callback)
 {
 	let passKey = guid();
 	accounts.findOneAndUpdate({email:email}, {$set:{
@@ -96,7 +96,7 @@ exports.addNewAccount = function(newData, callback)
 {
 	accounts.findOne({user:newData.user}, function(e, o) {
 		if (o){
-			callback('username-taken');
+			callback('National ID Number taken');
 		}	else{
 			accounts.findOne({email:newData.email}, function(e, o) {
 				if (o){
@@ -120,13 +120,14 @@ exports.updateAccount = function(newData, callback)
 		var o = {
 			name : data.name,
 			email : data.email,
-			country : data.country,
+			county : data.county,
 			phone : data.phone,
+			id : Number,
 			station : data.station,
-			loa : data.loa,
+			loe : data.loe,
 			inst : data.inst,
 			dob : Date,
-			doe : Date,
+			doa : Date,
 			status : data.status,
 			gender : data.gender
 			

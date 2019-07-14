@@ -49,4 +49,4 @@ module.exports = [
     {short:"46" , name:"Nyamira"},
     {short:"47" , name:"Nairobi"},
     
-]
+];

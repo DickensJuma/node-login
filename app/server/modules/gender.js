@@ -1,7 +1,5 @@
-
 module.exports = [
     {short:"  " , name:"Gender"},
-    {short:"M" , name:"Female"},
-    {short:"F" , name:"Female"},
-    {short:"Others" , name:"Rather not mention"}
+    {short:"1" , name:"Male"},
+    {short:"2" , name:"Female"}
 ]

@@ -1,8 +1,10 @@
 
-var CT = require('./modules/country-list');
+var CT = require('./modules/county-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
 var GD = require('./modules/gender');
+var ST = require('./modules/status');
+var ED = require('./modules/education');
 
 
 module.exports = function(app) {
@@ -59,13 +61,15 @@ module.exports = function(app) {
 	
 	app.get('/home', function(req, res) {
 		if (req.session.user == null){
-			res.redirect('/');
+			res.redirect('/home');
 		}	else{
 			res.render('home', {
 				title : 'Control Panel',
 				countries : CT,
+				loe: ED,
 				udata : req.session.user,
-				gender : GD
+				gender : GD,
+				status : ST
 			});
 		}
 	});
@@ -81,7 +85,7 @@ module.exports = function(app) {
 				name	: req.body['name'],
 				email	: req.body['email'],
 				pass	: req.body['pass'],
-				country	: req.body['country'],
+				county	: req.body['county'],
 				id  	: req.body['id'],
 				phone	: req.body['phone'],
 				station	: req.body['station'],
@@ -109,7 +113,7 @@ module.exports = function(app) {
 */
 
 	app.get('/signup', function(req, res) {
-		res.render('signup', {  title: 'Signup', countries : CT });
+		res.render('signup', {  title: 'Signup', countries : CT, gender: GD ,status: ST, loe: ED });
 	});
 	
 	app.post('/signup', function(req, res){
@@ -119,11 +123,13 @@ module.exports = function(app) {
 			user 	: req.body['user'],
 			pass	: req.body['pass'],
 			phone	: req.body['phone'],
+			station  : req.body['station'],
 			id      : req.body['id'],
-			country : req.body['country'],
+			county : req.body['county'],
+			loe     : req.body['loe'],
+			inst     : req.body['inst'],
 			dob 	: req.body['dob'],
-			doe 	: req.body['doe'],
-			loe     : req.body['loe'],	
+			doa 	: req.body['doa'],	
 			status 	: req.body['status'],
 			gender   : req.body['gender'],
 			
@@ -133,6 +139,7 @@ module.exports = function(app) {
 			}	else{
 				res.status(200).send('ok');
 			}
+			res.redirect('/');
 		});
 	});
 
@@ -190,10 +197,10 @@ module.exports = function(app) {
 	
 	app.get('/print', function(req, res) {
 		AM.getAllRecords( function(e, accounts){
-			res.render('print', { title : 'Account List', accts : accounts });
-		})
-	});
+			res.render('print', { title : 'Account List', accts : accounts ,status: ST});
 	
+		})});
+
 	app.post('/delete', function(req, res){
 		AM.deleteAccount(req.session.user._id, function(e, obj){
 			if (!e){
@@ -207,7 +214,7 @@ module.exports = function(app) {
 	
 	app.get('/reset', function(req, res) {
 		AM.deleteAllAccounts(function(){
-			res.redirect('/print');
+			res.redirect('/reset');
 		});
 	});
 	

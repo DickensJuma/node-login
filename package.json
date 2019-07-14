@@ -4,7 +4,7 @@
   "description": "A template for quickly building login systems on top of Node.js & MongoDb",
   "author": "DickensJuma <dickensjuma13@gmail.com>",
   "website": {
-    "url": "https://nodejs-login.herokuapp.com"
+    "url": "https://pag-kenya.herokuapp.com"
   },
   "private": false,
   "repository": {
