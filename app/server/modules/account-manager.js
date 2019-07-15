@@ -122,7 +122,7 @@ exports.updateAccount = function(newData, callback)
 			email : data.email,
 			county : data.county,
 			phone : data.phone,
-			id : Number,
+			id : data.id,
 			station : data.station,
 			loe : data.loe,
 			inst : data.inst,

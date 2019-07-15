@@ -61,7 +61,7 @@ module.exports = function(app) {
 	
 	app.get('/home', function(req, res) {
 		if (req.session.user == null){
-			res.redirect('/home');
+			res.redirect('/');
 		}	else{
 			res.render('home', {
 				title : 'Control Panel',
@@ -139,7 +139,7 @@ module.exports = function(app) {
 			}	else{
 				res.status(200).send('ok');
 			}
-			res.redirect('/');
+			
 		});
 	});
 
@@ -214,7 +214,7 @@ module.exports = function(app) {
 	
 	app.get('/reset', function(req, res) {
 		AM.deleteAllAccounts(function(){
-			res.redirect('/reset');
+			res.redirect('/print');
 		});
 	});
 	

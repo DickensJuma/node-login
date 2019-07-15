@@ -4,8 +4,11 @@
 	var bodyParser = require('body-parser');
 	var cookieParser = require('cookie-parser');
 	var MongoStore = require('connect-mongo')(session);
+	var mongoose = require(['mongoose']);
 
 	var app = express();
+	mongoose.connect('mongodb://localhost/pag-kenya');
+	const keys = require('./config/keys');
 
 	app.locals.pretty = true;
 	app.set('port', process.env.PORT || 3000);
@@ -31,11 +34,11 @@
 	}
 
 	app.use(session({
-		secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
+		secret: keys.process.env.SECRET,
 		proxy: true,
 		resave: true,
 		saveUninitialized: true,
-		store: new MongoStore({ url: process.env.DB_URL })
+		store: new MongoStore({  db: mongoose.connection.db,collection: 'sessions',url: process.env.DB_URL })
 		})
 	);
 
@@ -47,10 +50,12 @@
 	
 
 	//DB Config
-const db =require('./config/keys').mongoURI;
+const db =require('./app/config/keys').mongoURI;
 
 //connect to MongoDB
-MongoStore.connect(db).then(() => console.log('MongoDB Connected')).catch(err => console.log(err)
+MongoStore.connect(db)
+.then(() => console.log('MongoDB Connected'))
+.catch(err => console.log(err)
 );
 
 

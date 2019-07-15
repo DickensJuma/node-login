@@ -85,7 +85,7 @@ h6 {
   text-align: right;
   margin-top: 2px;
 }
-
+#account-form-container input,
 #account-form-container select {
   font-size: 0.875rem;
 }

@@ -26,11 +26,8 @@ function AccountValidator()
 		}
 	}
 
-	this.validateId = function(i)
-	{
-		var r = /[0-9]/;
-		return r.test(i);
-	}
+	
+	
 	
 	this.validateEmail = function(e)
 	{
@@ -92,4 +89,4 @@ AccountValidator.prototype.validateForm = function()
 	if (e.length) this.showErrors(e);
 	return e.length === 0;
 }
-
+}
