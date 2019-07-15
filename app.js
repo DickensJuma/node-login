@@ -3,12 +3,44 @@
 	var session = require('express-session');
 	var bodyParser = require('body-parser');
 	var cookieParser = require('cookie-parser');
+	var MongoClient = require('mongodb').MongoClient;
+	var mongodb = require('mongodb');
 	var MongoStore = require('connect-mongo')(session);
-	var mongoose = require(['mongoose']);
+	var mongoose = require('mongoose');
+
+	
+	
+	
+
 
 	var app = express();
-	mongoose.connect('mongodb://localhost/pag-kenya');
-	const keys = require('./config/keys');
+	const db = require('./app/config/keys_prod.js').mongoURI;
+
+	//initializine connection
+	MongoClient.connect(db, function(err, database){
+		if(err) throw err;
+		db = database;
+
+		// start the application after the database is connected
+		app.listen(5000);
+		console.log("Listening on port 5000");
+	});
+
+
+mongoose.connect(db, {
+	
+	
+	useNewUrlParser:true
+	  }).then(
+		() => { 
+			console.log("Database connected");
+		},
+		err => { 
+			/** handle initial connection error */ 
+			console.log("Error in database connection. ", err);
+		}
+	);
+
 
 	app.locals.pretty = true;
 	app.set('port', process.env.PORT || 3000);
@@ -22,23 +54,14 @@
 
 	// build mongo database connection url //
 
-	process.env.DB_HOST = process.env.DB_HOST || 'localhost'
-	process.env.DB_PORT = process.env.DB_PORT || 27017;
-	process.env.DB_NAME = process.env.DB_NAME || 'pag-kenya';
 
-	if (app.get('env') != 'live'){
-		process.env.DB_URL = 'mongodb://'+process.env.DB_HOST+':'+process.env.DB_PORT;
-	}	else {
-	// prepend url with authentication credentials // 
-		process.env.DB_URL = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+':'+process.env.DB_PORT;
-	}
 
 	app.use(session({
-		secret: keys.process.env.SECRET,
+		secret: '5d2931089ccf642c7e99d25c',
 		proxy: true,
 		resave: true,
 		saveUninitialized: true,
-		store: new MongoStore({  db: mongoose.connection.db,collection: 'sessions',url: process.env.DB_URL })
+		store: new MongoStore({ mongooseConnection: mongoose.connection })
 		})
 	);
 
@@ -49,14 +72,6 @@
 	});
 	
 
-	//DB Config
-const db =require('./app/config/keys').mongoURI;
-
-//connect to MongoDB
-MongoStore.connect(db)
-.then(() => console.log('MongoDB Connected'))
-.catch(err => console.log(err)
-);
 
 
 	

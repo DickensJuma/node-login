@@ -3,8 +3,8 @@ function AccountValidator()
 {
 // build array maps of the form inputs & control groups //
 
-	this.formFields = [$('#name-tf'), $('#email-tf'), $('#user-tf'), $('#pass-tf'), $('#id-tf'),$('#phone-tf'),$('#loe-tf'),$('#inst-tf'),$('#lob-tf'),$('#loa-tf'),$('#gender-tf'),$('#status-tf')];
-	this.controlGroups = [$('#name-cg'), $('#email-cg'), $('#user-cg'), $('#pass-cg'), $('#id-cg'),$('#phone-cg'),$('#loe-cg'),$('#inst-cg'),$('#lob-cg'),$('#loa-cg'),$('#gender-cg'),$('#status-cg'),];
+	this.formFields = [$('#name-tf'), $('#email-tf'), $('#user-tf'), $('#pass-tf'), $('#idno-tf'),$('#phone-tf'),$('#loe-tf'),$('#inst-tf'),$('#lob-tf'),$('#loa-tf'),$('#gender-tf'),$('#status-tf')];
+	this.controlGroups = [$('#name-cg'), $('#email-cg'), $('#user-cg'), $('#pass-cg'), $('#idno-cg'),$('#phone-cg'),$('#loe-cg'),$('#inst-cg'),$('#lob-cg'),$('#loa-cg'),$('#gender-cg'),$('#status-cg'),];
 	
 // bind the form-error modal window to this controller to display any errors //
 	
