@@ -14,7 +14,9 @@
 
 
 	var app = express();
-	const db = require('./app/config/keys_prod.js').mongoURI;
+	var db = require('./app/config/keys_prod.js').mongoURI;
+	console.log(db);
+	
 
 	//initializine connection
 	MongoClient.connect(db, function(err, database){
@@ -22,28 +24,16 @@
 		db = database;
 
 		// start the application after the database is connected
-		app.listen(5000);
-		console.log("Listening on port 5000");
+		app.listen(3000);
+		console.log("Listening on port 3000");
 	});
 
+	mongoose.connect(db,{useNewUrlParser: true});
 
-mongoose.connect(db, {
-	
-	
-	useNewUrlParser:true
-	  }).then(
-		() => { 
-			console.log("Database connected");
-		},
-		err => { 
-			/** handle initial connection error */ 
-			console.log("Error in database connection. ", err);
-		}
-	);
 
 
 	app.locals.pretty = true;
-	app.set('port', process.env.PORT || 3000);
+	app.set('port', process.env.PORT || 5000);
 	app.set('views', __dirname + '/app/server/views');
 	app.set('view engine', 'pug');
 	app.use(cookieParser());
@@ -53,6 +43,7 @@ mongoose.connect(db, {
 	app.use(express.static(__dirname + '/app/public'));
 
 	// build mongo database connection url //
+	
 
 
 
@@ -61,7 +52,7 @@ mongoose.connect(db, {
 		proxy: true,
 		resave: true,
 		saveUninitialized: true,
-		store: new MongoStore({ mongooseConnection: mongoose.connection })
+		store: new MongoStore({ mongooseConnection: mongoose.connection , useNewUrlParser: true  })
 		})
 	);
 
