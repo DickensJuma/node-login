@@ -18,8 +18,10 @@
     "emailjs": "^2.2.0",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "gh-pages": "^2.0.1",
     "moment": "^2.22.2",
     "mongodb": "^3.1.10",
+    "mongoose": "^5.6.4",
     "nodemailer": "^6.2.1",
     "pug": "^2.0.3",
     "stylus": "^0.54.5"
@@ -29,9 +31,6 @@
   },
   "scripts": {
     "start": "node app.js"
-    
-    
-   
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
