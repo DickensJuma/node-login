@@ -1,69 +1,47 @@
-	var http = require('http');
-	var express = require('express');
-	var session = require('express-session');
-	var bodyParser = require('body-parser');
-	var cookieParser = require('cookie-parser');
-	var MongoClient = require('mongodb').MongoClient;
-	var mongodb = require('mongodb');
-	var MongoStore = require('connect-mongo')(session);
-	var mongoose = require('mongoose');
+var http = require('http');
+var express = require('express');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var MongoStore = require('connect-mongo')(session);
 
-	
-	
-	
+var app = express();
 
+app.locals.pretty = true;
+app.set('port', process.env.PORT || 3000);
+app.set('views', __dirname + '/app/server/views');
+app.set('view engine', 'pug');
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(require('stylus').middleware({ src: __dirname + '/app/public' }));
+app.use(express.static(__dirname + '/app/public'));
 
-	var app = express();
-	var db = require('./app/config/keys_prod.js').mongoURI;
-	console.log(db);
-	
+// build mongo database connection url //
 
-	//initializine connection
-	MongoClient.connect(db, function(err, database){
-		if(err) throw err;
-		db = database;
+process.env.DB_HOST = process.env.DB_HOST || 'localhost'
+process.env.DB_PORT = process.env.DB_PORT || 27017;
+process.env.DB_NAME = process.env.DB_NAME || 'pag-kenya';
 
-		// start the application after the database is connected
-		app.listen(3000);
-		console.log("Listening on port 3000");
-	});
+if (app.get('env') != 'live'){
+	process.env.DB_URL = 'mongodb://'+process.env.DB_HOST+':'+process.env.DB_PORT;
+}	else {
+// prepend url with authentication credentials // 
+	process.env.DB_URL = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+':'+process.env.DB_PORT;
+}
 
-	mongoose.connect(db,{useNewUrlParser: true});
+app.use(session({
+	secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
+	proxy: true,
+	resave: true,
+	saveUninitialized: true,
+	store: new MongoStore({ url: process.env.DB_URL })
+	})
+);
 
+require('./app/server/routes')(app);
 
+http.createServer(app).listen(app.get('port'), function(){
+	console.log('Express server listening on port ' + app.get('port'));
+});
 
-	app.locals.pretty = true;
-	app.set('port', process.env.PORT || 5000);
-	app.set('views', __dirname + '/app/server/views');
-	app.set('view engine', 'pug');
-	app.use(cookieParser());
-	app.use(bodyParser.json());
-	app.use(bodyParser.urlencoded({ extended: true }));
-	app.use(require('stylus').middleware({ src: __dirname + '/app/public' }));
-	app.use(express.static(__dirname + '/app/public'));
-
-	// build mongo database connection url //
-	
-
-
-
-	app.use(session({
-		secret: '5d2931089ccf642c7e99d25c',
-		proxy: true,
-		resave: true,
-		saveUninitialized: true,
-		store: new MongoStore({ mongooseConnection: mongoose.connection , useNewUrlParser: true  })
-		})
-	);
-
-	require('./app/server/routes')(app);
-
-	http.createServer(app).listen(app.get('port'), function(){
-		console.log('Express server listening on port ' + app.get('port'));
-	});
-	
-
-
-
-	
-						  
