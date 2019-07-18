@@ -1,4 +1,5 @@
 
+
 const crypto 		= require('crypto');
 const moment 		= require('moment');
 const MongoClient 	= require('mongodb').MongoClient;
@@ -15,7 +16,7 @@ MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, c
 		console.log('mongo :: connected to database :: "'+process.env.DB_NAME+'"');
 	}
 });
-console.log
+
 const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});}
 
 /*
@@ -67,7 +68,7 @@ exports.validateLoginKey = function(cookie, ipAddress, callback)
 	accounts.findOne({cookie:cookie, ip:ipAddress}, callback);
 }
 
-exports.generatePasswordKey = function(email, ipAddress,callback)
+exports.generatePasswordKey = function(email, ipAddress, callback)
 {
 	let passKey = guid();
 	accounts.findOneAndUpdate({email:email}, {$set:{
@@ -96,7 +97,7 @@ exports.addNewAccount = function(newData, callback)
 {
 	accounts.findOne({user:newData.user}, function(e, o) {
 		if (o){
-			callback('National ID Number taken');
+			callback('username-taken');
 		}	else{
 			accounts.findOne({email:newData.email}, function(e, o) {
 				if (o){
@@ -120,19 +121,8 @@ exports.updateAccount = function(newData, callback)
 		var o = {
 			name : data.name,
 			email : data.email,
-			county : data.county,
-			phone : data.phone,
-			idno : data.idno,
-			station : data.station,
-			loe : data.loe,
-			inst : data.inst,
-			dob : Date,
-			doa : Date,
-			status : data.status,
-			gender : data.gender
-			
+			country : data.country
 		}
-		
 		if (data.pass) o.pass = data.pass;
 		accounts.findOneAndUpdate({_id:getObjectId(data.id)}, {$set:o}, {returnOriginal : false}, callback);
 	}
@@ -145,7 +135,6 @@ exports.updateAccount = function(newData, callback)
 		});
 	}
 }
-
 
 exports.updatePassword = function(passKey, newPass, callback)
 {
@@ -222,3 +211,21 @@ var listIndexes = function()
 	});
 }
 
+
+// var o = {
+// 	name : data.name,
+// 	email : data.email,
+// 	county : data.county,
+// 	phone : data.phone,
+// 	idno : data.idno,
+// 	station : data.station,
+// 	loe : data.loe,
+// 	inst : data.inst,
+// 	dob : Date,
+// 	doa : Date,
+// 	status : data.status,
+// 	gender : data.gender
+	
+// }
+
+	

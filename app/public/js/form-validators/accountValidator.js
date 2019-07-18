@@ -58,11 +58,7 @@ AccountValidator.prototype.showInvalidUserName = function()
 	this.showErrors(['That username is already in use.']);
 
 }
-AccountValidator.prototype.showInvalidUserId = function()
-{
-	this.controlGroups[3].addClass('error');
-	this.showErrors(['That National ID Number is already  used.']);
-}
+
 
 AccountValidator.prototype.validateForm = function()
 {
@@ -82,10 +78,6 @@ AccountValidator.prototype.validateForm = function()
 		this.controlGroups[3].addClass('error');
 		e.push('Password Should Be At Least 6 Characters');
 
-	if (this.validateId(this.formFields[4].val()) == false) {
-		this.controlGroups[4].addClass('error');
-		e.push('National ID invalid');	
-	}
 	if (e.length) this.showErrors(e);
 	return e.length === 0;
 }
