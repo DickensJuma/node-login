@@ -4,11 +4,12 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var MongoStore = require('connect-mongo')(session);
+var mongoose = require ('mongoose');
 
 var app = express();
 
 app.locals.pretty = true;
-app.set('port', process.env.PORT || 3000);
+// app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/app/server/views');
 app.set('view engine', 'pug');
 app.use(cookieParser());
@@ -17,64 +18,29 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('stylus').middleware({ src: __dirname + '/app/public' }));
 app.use(express.static(__dirname + '/app/public'));
 
-//configure the database
-const db = require('./app/config').mongoURI;
-
-// Import Keys
-// const uri = require("./app/config");
-// const mongouri = uri.mongoUri;
-
-
-//db connection
-mongoose.connect(db, {useNewUrlParser: true})
-	.then(()=>console.log('database connected successfully'))
-  .catch(err=>console.log(err));
-  
-  
+// build mongo database connection url 
+const db = require('./app/config/keys_prod').mongoURI;
 
 // app.use(session({
-// 	secret: '2f4c9793-7464-4816-93d4-6d4fd6be22cf',
-
+// 	secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
+// 	proxy: true,
+// 	resave: true,
+// 	saveUninitialized: true,
 // 	store: new MongoStore({ url: process.env.DB_URL })
 // 	})
 // );
+mongoose.connect(db, {useNewUrlParser: true})
+	.then(()=>console.log('database connected successfully'))
+	.catch(err=>console.log(err));
 
-// var mongoose = require('mongoose')(session);
+const port = process.env.port || 5000;
 
-
-   app.use(session({
-      secret: 'my secret sign key',
-      store: new MongoStore({
-        // host: '127.0.0.1',
-        // port: '27017',
-        proxy: true,
-        resave: true,
-        saveUninitialized: true,
-        url: db,
-        db: 'pagkenya'
-      })
-     }))
-  //   .use('/home', function (req, res) {
-  //     if (req.pagkenya.views) {
-  //       req.pagkenya.views++;
-  //     }
-  //     else {
-  //       req.pagkenya.views = 1;
-  //     }
-  //     res.end('Total views for you:' + req.pagkenya.views);
-  //   })
-  //   .use('/reset', function(req, res) {
-  //     delete req.pagkenya.views;
-  //     res.end('Cleared all your views');
-  //   })
-	// .listen(3000);
-	
 
 require('./app/server/routes')(app);
 const port = process.env.port || 5000; 
 
-app.listen(port, function(){
-	console.log(`Express server listening on port ',  ${port}`);
+app.listen(port, ()=>{
+	console.log(`server up and running on port ${port}`)
 });
 
 
