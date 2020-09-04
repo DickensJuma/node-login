@@ -41,7 +41,7 @@
     }
   ],
   "dependencies": {
-    "mongodb": "^2.0.36"
+    "mongodb": "^3.6.1"
   },
   "deprecated": false,
   "description": "MongoDB session store for Express and Connect",
